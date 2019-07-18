@@ -19,7 +19,7 @@ app.use(cors());
 app.use(helmet());
 // app.use(validateBearerToken)
 
-app.use(notefulRouter);
+app.use("/", notefulRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello, Kris!");

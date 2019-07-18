@@ -1,49 +1,24 @@
 const notefulService = {
-  // getAllBookmarks(knex) {
-  //   return knex.select('*').from('bookmarks')
-  // },
-  // getById(knex, id) {
-  //   return knex.from('bookmarks').select('*').where('id', id).first()
-  // },
-  // insertBookmark(knex, newBookmark) {
-  //   return knex
-  //     .insert(newBookmark)
-  //     .into('bookmarks')
-  //     .returning('*')
-  //     .then(rows => {
-  //       return rows[0]
-  //     })
-  // },
-  // deleteBookmark(knex, id) {
-  //   return knex('bookmarks')
-  //     .where({ id })
-  //     .delete()
-  // },
-  // updateBookmark(knex, id, newBookmarkFields) {
-  //   return knex('bookmarks')
-  //     .where({ id })
-  //     .update(newBookmarkFields)
-  // },
   getAllFolders(knex) {
     return knex.select("*").from("noteful_folders");
   },
   insertFolder(knex, newFolder) {
     return knex
-      .insert(xss(newFolder))
+      .insert(newFolder)
       .into("noteful_folders")
       .returning("*")
       .then(rows => {
-        return rows[0];
+        return rows;
       });
   },
   updateFolder(knex, id, newFolderFields) {
     return knex("noteful_folders")
       .where({ id })
-      .update(xss(newFolderFields));
+      .update(newFolderFields);
   },
-  deleteNote(knex, id) {
-    return knex("noteful_folders")
-      .where({ id })
+  deleteNote(knex, noteid) {
+    return knex("noteful_notes")
+      .where({ noteid })
       .delete();
   },
   getAllNotes(knex) {
@@ -51,28 +26,28 @@ const notefulService = {
   },
   insertNote(knex, newNote) {
     return knex
-      .insert(xss(newNote))
+      .insert(newNote)
       .into("noteful_notes")
       .returning("*")
       .then(rows => {
-        return rows[0];
+        return rows;
       });
   },
   getOneNote(knex, id) {
     return knex
       .from("noteful_notes")
       .select("*")
-      .where("id", id)
+      .where("noteid", id)
       .first();
   },
-  updateNote(knex, id, newNoteFields) {
+  updateNote(knex, noteid, newNoteFields) {
     return knex("noteful_notes")
-      .where({ id })
-      .update(xss(newNoteFields));
+      .where({ noteid })
+      .update(newNoteFields);
   },
-  deleteNote(knex, id) {
+  deleteNote(knex, noteid) {
     return knex("noteful_notes")
-      .where({ id })
+      .where({ noteid })
       .delete();
   }
 };
