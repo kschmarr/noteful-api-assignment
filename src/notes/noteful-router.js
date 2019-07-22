@@ -64,7 +64,6 @@ notefulRouter
   })
   .post(bodyParser, (req, res, next) => {
     for (const field of ["title", "content", "folderid"]) {
-      console.log(field);
       if (!req.body[field]) {
         logger.error(`${field} is required`);
         return res.status(400).send(`'${field}' is required`);
