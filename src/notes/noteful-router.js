@@ -44,7 +44,6 @@ notefulRouter
     notefulService
       .insertFolder(req.app.get("db"), newFolder)
       .then(folder => {
-        logger.info(`Folder with id ${folder.folderid} created.`);
         res
           .status(201)
           .location(`/folders/${folder.folderid}`)
@@ -114,9 +113,9 @@ notefulRouter
 
     notefulService
       .deleteNote(req.app.get("db"), noteid)
-      .then(numRowsAffected => {
+      .then(() => {
         logger.info(`Card with id ${noteid} deleted.`);
-        res.status(204).end();
+        res.status(200).json({ noteid: noteid });
       })
       .catch(next);
   });
